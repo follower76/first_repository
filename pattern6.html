@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <style>
+        body{ background-color: ivory; }
+        canvas{border:1px solid red;}
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+   <h4>Fill pie wedges with patterns using image loader.</h4>
+<canvas id="canvas" width=300 height=300></canvas>
+    <script>
+
+
+
+
+var canvas = document.getElementById("canvas");
+var c = canvas.getContext("2d");
+var data = [ 23, 68, 20, 30 ];
+// image loader
+var imageURLs = []; // put the paths to your images here
+var imagesOK = 0;
+var imgs = [];
+
+imageURLs.push("file://c|/DPT2/dpt2/@@/Intro_money.png");
+//imageURLs.push("https://dl.dropboxusercontent.com/u/139992952/stackoverflow/house16x16.png");
+imageURLs.push("https://dl.dropboxusercontent.com/u/139992952/multple/house2-17x17.jpg");
+imageURLs.push("https://dl.dropboxusercontent.com/u/139992952/multple/house1-17x17.jpg");
+imageURLs.push("https://dl.dropboxusercontent.com/u/139992952/multple/house4-17x17.jpg");
+
+//imageURLs.push("f2.jpg");
+//imageURLs.push("f3.jpg");
+//imageURLs.push("f4.jpg");
+loadAllImages(start);
+var total =0;
+for(var i=0; i<data.length; i++) { 
+    total += data[i]; 
+}
+function loadAllImages(callback) {
+    for (var i = 0; i < imageURLs.length; i++) {
+        var img = new Image();
+        imgs.push(img);
+        img.onload = function () {
+           alert("success")
+            imagesOK++;
+            if (imagesOK >= imageURLs.length) {
+                callback();
+            }
+        };
+        img.onerror = function () {
+            alert("image load failed");
+        }
+        img.crossOrigin = "anonymous";
+        img.src = imageURLs[i];
+    }
+}
+var s =0;
+
+function start() {
+
+    // the imgs[] array now holds fully loaded images
+    // the imgs[] are in the same order as imageURLs[]
+
+    for (var i = 0; i < imgs.length; i++) {
+        var s = i * Math.PI / 4;
+        var e = s + Math.PI / 3;
+        
+    //    var fraction = data[i]/total; 
+    ////calc starting angle 
+    //    var e = s + fraction*Math.PI*2;
+        drawWedge(imgs[i], 150, 150, 100, s, e);
+    }
+
+}
+
+
+function drawWedge(img, cx, cy, radius, startRadians, endRadians) {
+    //
+    pat = c.createPattern(img, "repeat");
+    //create a path 
+    c.beginPath();
+    c.moveTo(cx, cy);
+    c.arc(cx, cy, radius, startRadians, endRadians);
+    c.lineTo(cx, cy);
+    c.closePath();
+    //fill it
+    c.fillStyle = pat;
+    c.fill();
+    //stroke it 
+    c.strokeStyle = "black";
+    c.stroke();
+}
+
+</script>
+<div class="addthis_toolbox addthis_floating_style addthis_32x32_style" style="left:0;top:200px;">
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_tumblr"></a>
+<a class="addthis_button_stumbleupon"></a>
+<a class="addthis_button_gmail"></a>
+<a class="addthis_button_google_plusone_share"></a>
+</div>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=georgeuser"></script>
+<!-- AddThis Button END -->
+</body> 
+</html>
