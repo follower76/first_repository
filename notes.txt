@@ -1,1 +1,2 @@
 Yeni dosya degistiriliyor 1 
+ikinci bir degisiklik yapiyorum su an ve bunu commit edecegim.mulaku
